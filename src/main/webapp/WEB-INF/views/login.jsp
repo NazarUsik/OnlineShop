@@ -21,9 +21,9 @@
     <h2>Login</h2>
     <p style="color: red">${param.error}${error}</p>
 
-    <c:if test="${param.message != null}">
+    <c:if test="${message != null}">
         <script type="text/javascript">
-            alert(${param.message});
+            alert(${message});
         </script>
     </c:if>
 

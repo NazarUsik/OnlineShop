@@ -103,7 +103,7 @@ public class EmailController {
                     request.getServerPort() +       // "8080"
                     "/confirm-reset?token=" +       // "/confirm-reset"
                     confirmationToken.getConfirmationToken();
-
+            System.out.println("URL:" + uri);
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
