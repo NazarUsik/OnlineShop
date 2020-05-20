@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -49,24 +50,32 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
         if (authentication != null) {
             boolean remember = (boolean) (request.getSession().getAttribute("remember"));
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
-            User user = userService.findByEmail(authentication.getName());
+            try {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
+                User user = userService.findByEmail(authentication.getName());
 
 
-            if (user != null &&
+                if (user != null &&
                         userService.matchesPassword((String) authentication.getCredentials(), user.getPassword())) {
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                        userDetails.getUsername(),
-                        userDetails.getPassword(),
-                        userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                            userDetails.getUsername(),
+                            userDetails.getPassword(),
+                            userDetails.getAuthorities());
 
-                StoredAttributeUtils.storeLoginedUser(request.getSession(), user);
-                RememberUtils.remember(response, remember, user);
+                    StoredAttributeUtils.storeLoginedUser(request.getSession(), user);
+                    RememberUtils.remember(response, remember, user);
 
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(token);
-            } else {
+                    SecurityContextHolder
+                            .getContext()
+                            .setAuthentication(token);
+                } else {
+                    request.setAttribute("error", "Email or Password incorrect!");
+                    request
+                            .getServletContext()
+                            .getRequestDispatcher("/WEB-INF/views/login.jsp")
+                            .forward(request, response);
+                }
+            } catch (UsernameNotFoundException ex) {
                 request.setAttribute("error", "Email or Password incorrect!");
                 request
                         .getServletContext()
