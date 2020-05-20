@@ -1,0 +1,319 @@
+swagger: "2.0"
+info:
+  description: "This is a simple server online store. It was developed using the Spring Framework, Spring Boot, Spring Data JPA, Spring Security, JWT, Hibernate, PostgreSQL, HikariPool, Java Servlet, JSP - JSTL (EL). The site has the ability to view the catalog of goods, authorization and registration, purchase of goods and receipt of a sales receipt. There is also an administrator who can add, delete and edit products."
+  version: "1.0.0"
+  title: "Swagger Documentation"
+  contact:
+    email: "usik.nazar@gmail.com"
+    url: "https://onlineshopproarena.herokuapp.com/"
+host: "onlineshopproarena.herokuapp.com"
+basePath: "/home"
+tags:
+  - name: "Home"
+    description: "This is the main page"
+  - name: "User"
+    description: "Operations about user"
+  - name: "Admin"
+    description: "Operations about admin"
+  - name: "AccessDenied"
+    description: "accessDenied"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /home:
+    get:
+      tags:
+        - "Home"
+      summary: "View all product and menu"
+      description: ""
+      operationId: "viewAllProduct"
+      responses:
+        '200':
+          description: OK
+  /search:
+    post:
+      tags:
+        - "Home"
+      summary: "Find product by name"
+      description: ""
+      operationId: "findProduct"
+      parameters:
+        - in: body
+          name: "keyword"
+          description: "Product search word"
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        '404':
+          description: "Product not found"
+  /login:
+    get:
+      tags:
+        - "User"
+      summary: "Login user"
+      description: ""
+      parameters:
+        - in: "body"
+          name: "user"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: OK
+        "400":
+          description: "Invalid username or password"
+  /logout:
+    get:
+      tags:
+        - "User"
+      summary: "Logout user"
+      description: ""
+      responses:
+        '200':
+          description: OK
+  /registration:
+    post:
+      tags:
+        - "User"
+      summary: "Registration user"
+      description: ""
+      parameters:
+        - in: "body"
+          name: "user"
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: OK
+        "400":
+          description: "Invalid username or password"
+  /user:
+    get:
+      tags:
+        - "User"
+      summary: "Redirect to user page"
+      description: ""
+      responses:
+        '200':
+          description: OK
+  /setting:
+    get:
+      tags:
+        - "User"
+      summary: "Page with setting for user"
+      description: ""
+      responses:
+        '200':
+          description: OK
+  /editOrder:
+    post:
+      tags:
+        - "User"
+      summary: "Edit order"
+      description: ""
+      operationId: "editOrder"
+      parameters:
+        - in: "body"
+          name: "order"
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: OK
+  /saveOrder:
+    put:
+      tags:
+        - "User"
+      summary: "Save order"
+      description: ""
+      operationId: "saveOrder"
+      parameters:
+        - in: "body"
+          name: "order"
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: OK
+  /addToCart:
+    put:
+      tags:
+        - "User"
+      summary: "Add product for user"
+      description: ""
+      operationId: "addOrder"
+      parameters:
+        - in: "body"
+          name: "prodect"
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+  /sendReceipt:
+    post:
+      tags:
+        - "User"
+      summary: "Send pdf receipt with product and order"
+      description: ""
+      operationId: "createPdfReceipt"
+      parameters:
+        - in: query
+          name: "orderId"
+          required: true
+          type: integer
+        - in: query
+          name: "productId"
+          required: true
+          type: integer
+
+      responses:
+        '200':
+          description: OK
+  /newProduct:
+    put:
+      tags:
+        - "Admin"
+      summary: "Add product"
+      description: ""
+      operationId: "addProduct"
+      parameters:
+        - in: "body"
+          name: "prodect"
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+  /editProduct:
+    post:
+      tags:
+        - "Admin"
+      summary: "Edit product"
+      description: ""
+      operationId: "editProduct"
+      parameters:
+        - in: "body"
+          name: "prodect"
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+  /delProduct:
+    delete:
+      tags:
+        - "Admin"
+      summary: "Delete product"
+      description: ""
+      operationId: "delProduct"
+      parameters:
+        - in: "body"
+          name: "prodect"
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+  /accessDenied:
+    get:
+      tags:
+        - "AccessDenied"
+      summary: "accessDenied"
+      description: ""
+      responses:
+        '200':
+          description: OK
+  /forgot-password:
+    get:
+      tags:
+        - "User"
+      summary: "Forget Password"
+      description: ""
+      operationId: "send email with link for reset password"
+      responses:
+        '200':
+          description: OK
+  /confirm-reset:
+    post:
+      tags:
+        - "User"
+      summary: "confirm link for reset password"
+      description: ""
+      responses:
+        '200':
+          description: OK
+  /reset-password:
+    post:
+      tags:
+        - "User"
+      summary: "Reset password"
+      description: ""
+      operationId: "reset_password"
+      responses:
+        '200':
+          description: OK
+definitions:
+  Product:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      price:
+        type: integer
+        format: int64
+    required:
+      - id
+      - name
+      - price
+  Order:
+    type: object
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      productId:
+        type: "integer"
+        format: "int64"
+      quantity:
+        type: "integer"
+        format: "int32"
+      price:
+        type: "integer"
+        format: "int64"
+    required:
+      - id
+      - productId
+      - quantity
+      - price
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - id
+      - email
+      - password
