@@ -19,6 +19,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 
 public class JWTAuthenticationFilter extends GenericFilterBean {
@@ -47,8 +48,10 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
         Authentication authentication = TokenAuthenticationService
                 .getAuthentication((request.getSession()));
 
-        if (authentication != null) {
-            boolean remember = (boolean) (request.getSession().getAttribute("remember"));
+        Object r = (request.getSession().getAttribute("remember"));
+
+        if (authentication != null && r != null) {
+            boolean remember = (boolean) r;
 
             try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
@@ -69,21 +72,28 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
                             .getContext()
                             .setAuthentication(token);
                 } else {
-                    request.setAttribute("error", "Email or Password incorrect!");
-                    request
-                            .getServletContext()
-                            .getRequestDispatcher("/WEB-INF/views/login.jsp")
-                            .forward(request, response);
+                    redirectError(request, response);
                 }
             } catch (UsernameNotFoundException ex) {
-                request.setAttribute("error", "Email or Password incorrect!");
-                request
-                        .getServletContext()
-                        .getRequestDispatcher("/WEB-INF/views/login.jsp")
-                        .forward(request, response);
+                redirectError(request, response);
             }
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private void redirectError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        TokenAuthenticationService
+                .addAuthentication(
+                        request.getSession(),
+                        new UsernamePasswordAuthenticationToken(
+                                null,
+                                null,
+                                Collections.emptyList()));
+        request.setAttribute("error", "Email or Password incorrect!");
+        request
+                .getServletContext()
+                .getRequestDispatcher("/WEB-INF/views/login.jsp")
+                .forward(request, response);
     }
 }
