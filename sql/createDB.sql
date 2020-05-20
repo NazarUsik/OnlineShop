@@ -45,12 +45,12 @@ CREATE TABLE Confirmation_Token
 (
     token_id           SERIAL  NOT NULL PRIMARY KEY,
     confirmation_token VARCHAR NOT NULL,
-    created_date date,
-    user_id INTEGER NOT NULL
+    created_date       date,
+    user_id            INTEGER NOT NULL
 );
 
 ALTER TABLE Confirmation_Token
-    ADD CONSTRAINT FKConfToken FOREIGN KEY (user_id) REFERENCES CUSTOMER(id)
+    ADD CONSTRAINT FKConfToken FOREIGN KEY (user_id) REFERENCES CUSTOMER (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE;
 
@@ -72,11 +72,17 @@ ALTER TABLE SALES_ORDER
 
 INSERT INTO ROLE
 VALUES (DEFAULT, 'ADMIN'),
-       (DEFAULT, 'CUSTOMER');
+       (DEFAULT, 'CUSTOMER'),
+       (DEFAULT, 'ROLE_ANONYMOUS');
 
 INSERT INTO CUSTOMER
-VALUES (DEFAULT, 'Nazar', 'Usik', 'usik.example@gmail.com', 'admin50510', 1),
-       (DEFAULT, 'User', 'User', 'user.example@gmail.com', 'user12345', 2);
+VALUES (DEFAULT, 'Nazar', 'Usik', 'usik.example@gmail.com',
+        '$2a$10$JP9eQPKLQOeRqpKGa4lJXOpvpgssu2h/po7ZxFADIPA1tcq2N1VKi', 1),
+       (DEFAULT, 'User', 'User', 'user.example@gmail.com',
+        '$2a$10$O4f8o0FA5WU4SrlAx.8DXe9TpWJt3p1OuGjFzhpZuGMeLdAn2th6.', 2),
+       (DEFAULT, 'Tony', 'Montaña', 'tony.mantana@maf.com',
+        '$2a$10$fScsHHrZmTqN6utDP6ATE.byMXvRwYUl7qtOLF5bE7SJ5rUzGMnFC', 2);
+
 
 INSERT INTO PRODUCT
 VALUES (DEFAULT, 'ACE TENNIS RACKET I', 155.25, 25, 0),
