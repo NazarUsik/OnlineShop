@@ -22,3 +22,5 @@
 - Postgress
 
 #### The implemented application can be tested using [these links](https://onlineshopproarena.herokuapp.com/).
+
+>`The program was written on 05/20/20`
