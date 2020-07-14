@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS CUSTOMER
     id         NUMBER  NOT NULL PRIMARY KEY AUTO_INCREMENT,
     login      varchar NOT NULL,
     password   varchar NOT NULL,
-    email      varchar NOT NULL UNIQUE,
+    email      varchar NOT NULL,
     first_name varchar NOT NULL,
     last_name  varchar NOT NULL,
     birthday   DATE    NOT NULL,
