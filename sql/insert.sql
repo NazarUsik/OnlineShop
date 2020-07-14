@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS USER
+CREATE TABLE IF NOT EXISTS CUSTOMER
 (
     id         NUMBER  NOT NULL PRIMARY KEY AUTO_INCREMENT,
     login      varchar NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS ROLE
     name VARCHAR NOT NULL
 );
 
-ALTER TABLE IF EXISTS USER
+ALTER TABLE IF EXISTS CUSTOMER
     ADD CONSTRAINT IF NOT EXISTS FKUser FOREIGN KEY (role_id) REFERENCES TRAINING.ROLE (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE;
@@ -25,7 +25,7 @@ INSERT INTO ROLE
 VALUES (DEFAULT, 'admin'),
        (DEFAULT, 'user');
 
-INSERT INTO USER
+INSERT INTO CUSTOMER
 VALUES (DEFAULT, 'user', 'user', 'user1@example.mail.com', 'user', 'user', '2000-10-20', 2),
        (DEFAULT, 'user2', '2resu', 'user2@example.mail.com', 'user2', 'user2', '1980-10-20', 2),
        (DEFAULT, 'user3', '3resu', 'user3@example.mail.com', 'user3', 'user3', '1990-10-20', 2),
