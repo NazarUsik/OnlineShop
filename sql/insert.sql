@@ -29,4 +29,4 @@ INSERT INTO CUSTOMER
 VALUES (DEFAULT, 'user', 'user', 'user1@example.mail.com', 'user', 'user', '2000-10-20', 2),
        (DEFAULT, 'user2', '2resu', 'user2@example.mail.com', 'user2', 'user2', '1980-10-20', 2),
        (DEFAULT, 'user3', '3resu', 'user3@example.mail.com', 'user3', 'user3', '1990-10-20', 2),
-       (DEFAULT, 'admin', '$argon2id$v=19$m=4096,t=3,p=1$dKd1GKXEb0Z/lL1bePWDfA$lWcdQ/k0RYEmXKLBxbhCvxEYH7dEqeWrz4ufxcxcHbg', 'admin@example.mail.com', 'admin', 'admin', '2010-10-20', 1);
+       (DEFAULT, 'admin', '$2a$10$gwTzOPvm7ce/mm7OE2g5Iu6Kh/NLjlKnmUncVfV24qgb16AsHTF7.', 'admin@example.mail.com', 'admin', 'admin', '2010-10-20', 1);
