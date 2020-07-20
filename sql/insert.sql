@@ -26,7 +26,7 @@ VALUES (DEFAULT, 'admin'),
        (DEFAULT, 'user');
 
 INSERT INTO CUSTOMER
-VALUES (DEFAULT, 'user', 'user', 'user1@example.mail.com', 'user', 'user', '2000-10-20', 2),
-       (DEFAULT, 'user2', '2resu', 'user2@example.mail.com', 'user2', 'user2', '1980-10-20', 2),
-       (DEFAULT, 'user3', '3resu', 'user3@example.mail.com', 'user3', 'user3', '1990-10-20', 2),
+VALUES (DEFAULT, 'user', '$2a$10$ZotEfi9LbLZAn2OPy9JizO4pVgt23wNcCVmJgLvGtWHAQIFc7Beki', 'user1@example.mail.com', 'user', 'user', '2000-10-20', 2),
+       (DEFAULT, 'user2', '$2a$10$WQ6kvNUAyC4DV.GaVrDyg.pxEvwfJKdF91QkCWdI91DojyMYjRYgu', 'user2@example.mail.com', 'user2', 'user2', '1980-10-20', 2),
+       (DEFAULT, 'user3', '$2a$10$2BxEd4KLwsiT9RHCJWzxCuohdyTQq2x4tyMiFmBa1XuABb9/yyI6e', 'user3@example.mail.com', 'user3', 'user3', '1990-10-20', 2),
        (DEFAULT, 'admin', '$2a$10$gwTzOPvm7ce/mm7OE2g5Iu6Kh/NLjlKnmUncVfV24qgb16AsHTF7.', 'admin@example.mail.com', 'admin', 'admin', '2010-10-20', 1);
